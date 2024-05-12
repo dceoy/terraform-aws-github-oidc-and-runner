@@ -50,9 +50,9 @@ catalog {
 }
 
 inputs = {
-  system_name                          = local.env_vars.locals.system_name
-  env_type                             = local.env_vars.locals.env_type
-  github_repositories                  = ["dceoy/terraform-aws-github-oidc"]
-  github_oidc_provider_iam_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  system_name                              = local.env_vars.locals.system_name
+  env_type                                 = local.env_vars.locals.env_type
+  github_repositories_requiring_oidc       = ["dceoy/terraform-aws-github-oidc"]
+  github_iam_oidc_provider_iam_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
   # github_enterprise_slug               = null
 }
