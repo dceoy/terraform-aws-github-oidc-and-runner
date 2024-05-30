@@ -1,9 +1,9 @@
-terraform-aws-github-oidc
-=========================
+terraform-aws-github-oidc-and-runner
+====================================
 
-Terraform module to configure OIDC for AWS and GitHub Actions
+Terraform module for GitHub OIDC provider and Actions runner on AWS
 
-[![Lint and scan](https://github.com/dceoy/terraform-aws-github-oidc/actions/workflows/lint-and-scan.yml/badge.svg)](https://github.com/dceoy/terraform-aws-github-oidc/actions/workflows/lint-and-scan.yml)
+[![Lint and scan](https://github.com/dceoy/terraform-aws-github-oidc-and-runner/actions/workflows/lint-and-scan.yml/badge.svg)](https://github.com/dceoy/terraform-aws-github-oidc-and-runner/actions/workflows/lint-and-scan.yml)
 
 Installation
 ------------
@@ -11,8 +11,8 @@ Installation
 1.  Check out the repository.
 
     ```sh
-    $ git clone https://github.com/dceoy/terraform-aws-github-oidc.git
-    $ cd terraform-aws-github-oidc
+    $ git clone https://github.com/dceoy/terraform-aws-github-oidc-and-runner.git
+    $ cd terraform-aws-github-oidc-and-runner
     ````
 
 2.  Install [AWS CLI](https://aws.amazon.com/cli/) and set `~/.aws/config` and `~/.aws/credentials`.

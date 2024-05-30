@@ -1,7 +1,7 @@
 variable "system_name" {
   description = "System name"
   type        = string
-  default     = "gho"
+  default     = "gha"
 }
 
 variable "env_type" {
@@ -25,10 +25,10 @@ variable "github_repositories_requiring_oidc" {
 variable "github_iam_oidc_provider_iam_policy_arns" {
   description = "IAM role policy ARNs for the GitHub IAM OIDC provider"
   type        = list(string)
-  default     = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  default     = ["arn:aws:iam::aws:policy/PowerUserAccess"]
   validation {
     condition = alltrue([
-      for arn in var.github_iam_oidc_provider_iam_policy_arns : can(regex("arn:aws:iam::[0-9]+:policy/[A-Za-z0-9_-]+"))
+      for a in var.github_iam_oidc_provider_iam_policy_arns : can(regex("arn:aws:iam::(aws|[0-9]+):policy/[A-Za-z0-9_-]+", a))
     ])
     error_message = "IAM role policy ARNs must be valid ARNs"
   }

@@ -3,6 +3,6 @@ locals {
   region                   = "us-east-1"
   terraform_s3_bucket      = "tfstate-${local.region}-${local.account_id}"
   terraform_dynamodb_table = "tfstate-lock"
-  system_name              = "gho"
+  system_name              = "gha"
   env_type                 = "dev"
 }

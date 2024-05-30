@@ -1,4 +1,5 @@
 resource "aws_iam_openid_connect_provider" "github" {
+  count           = length(var.github_repositories_requiring_oidc) > 0 ? 1 : 0
   url             = var.github_enterprise_slug != null ? "https://token.actions.githubusercontent.com/${var.github_enterprise_slug}" : "https://token.actions.githubusercontent.com"
   thumbprint_list = [local.tls_certificate_sha1_fingerprint]
   client_id_list = setunion(
@@ -13,6 +14,7 @@ resource "aws_iam_openid_connect_provider" "github" {
 }
 
 resource "aws_iam_role" "github" {
+  count       = length(aws_iam_openid_connect_provider.github) > 0 ? 1 : 0
   name        = "${var.system_name}-${var.env_type}-github-iam-oidc-provider-iam-role"
   description = "GitHub OIDC provider IAM role"
   path        = "/"
@@ -22,7 +24,7 @@ resource "aws_iam_role" "github" {
       {
         Effect = "Allow"
         Principal = {
-          Federated = var.github_enterprise_slug != null ? "${aws_iam_openid_connect_provider.github.arn}/${var.github_enterprise_slug}" : aws_iam_openid_connect_provider.github.arn
+          Federated = var.github_enterprise_slug != null ? "${aws_iam_openid_connect_provider.github[count.index].arn}/${var.github_enterprise_slug}" : aws_iam_openid_connect_provider.github[count.index].arn
         }
         Action = ["sts:AssumeRoleWithWebIdentity"]
         Condition = {

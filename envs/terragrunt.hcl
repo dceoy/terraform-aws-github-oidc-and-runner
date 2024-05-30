@@ -45,14 +45,27 @@ EOF
 
 catalog {
   urls = [
-    "${local.repo_root}/modules/iam"
+    "${local.repo_root}/modules/oidc",
+    "${local.repo_root}/modules/kms",
+    "${local.repo_root}/modules/codebuild"
   ]
 }
 
 inputs = {
-  system_name                              = local.env_vars.locals.system_name
-  env_type                                 = local.env_vars.locals.env_type
-  github_repositories_requiring_oidc       = ["dceoy/terraform-aws-github-oidc"]
-  github_iam_oidc_provider_iam_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  system_name                                       = local.env_vars.locals.system_name
+  env_type                                          = local.env_vars.locals.env_type
+  create_kms_key                                    = false
+  kms_key_deletion_window_in_days                   = 30
+  cloudwatch_logs_retention_in_days                 = 30
+  codebuild_environment_type                        = "LINUX_CONTAINER"
+  codebuild_environment_compute_type                = "BUILD_GENERAL1_SMALL"
+  codebuild_environment_image                       = "aws/codebuild/standard:7.0"
+  codebuild_environment_image_pull_credentials_type = "CODEBUILD"
+  codebuild_environment_privileged_mode             = false
+  codebuild_build_timeout                           = 5
+  codebuild_queue_timeout                           = 5
+  use_ecr                                           = false
+  github_repositories_requiring_oidc                = []
+  github_iam_oidc_provider_iam_policy_arns          = ["arn:aws:iam::aws:policy/PowerUserAccess"]
   # github_enterprise_slug               = null
 }
