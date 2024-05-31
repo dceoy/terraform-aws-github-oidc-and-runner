@@ -10,6 +10,30 @@ variable "env_type" {
   default     = "dev"
 }
 
+variable "github_repositories_requiring_codebuild" {
+  description = "GitHub repositories requiring CodeBuild"
+  type        = list(string)
+  default     = []
+  validation {
+    condition = alltrue([
+      for r in var.github_repositories_requiring_codebuild : can(regexall("^[A-Za-z0-9_.-]+?/([A-Za-z0-9_.:/-]+[*]?|\\*)$", r))
+    ])
+    error_message = "GitHub repositories must be in the format 'organization/repository'"
+  }
+}
+
+variable "github_enterprise_slug" {
+  description = "GitHub Enterprise slug"
+  type        = string
+  default     = null
+}
+
+variable "kms_key_arn" {
+  description = "KMS key ARN"
+  type        = string
+  default     = null
+}
+
 variable "cloudwatch_logs_retention_in_days" {
   description = "CloudWatch Logs retention in days"
   type        = number
@@ -18,12 +42,6 @@ variable "cloudwatch_logs_retention_in_days" {
     condition     = contains([0, 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653], var.cloudwatch_logs_retention_in_days)
     error_message = "CloudWatch Logs retention in days must be 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653 or 0 (zero indicates never expire logs)"
   }
-}
-
-variable "kms_key_arn" {
-  description = "KMS key ARN"
-  type        = string
-  default     = null
 }
 
 variable "codebuild_environment_type" {
@@ -74,10 +92,4 @@ variable "codebuild_queued_timeout" {
     condition     = var.codebuild_queued_timeout >= 5 && var.codebuild_queued_timeout <= 480
     error_message = "CodeBuild queued timeout must be between 5 and 480 minutes"
   }
-}
-
-variable "use_ecr" {
-  description = "Whether to use ECR"
-  type        = bool
-  default     = false
 }

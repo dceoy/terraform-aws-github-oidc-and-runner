@@ -1,6 +1,11 @@
-output "codebuild_project_id" {
-  description = "CodeBuild project ID"
-  value       = aws_codebuild_project.github.id
+output "codebuild_project_names" {
+  description = "CodeBuild project names"
+  value       = { for k, v in aws_codebuild_project.github : k => v.name }
+}
+
+output "codebuild_webhook_ids" {
+  description = "CodeBuild webhook IDs"
+  value       = { for k, v in aws_codebuild_webhook.github : k => v.id }
 }
 
 output "codebuild_cloudwatch_logs_log_group_name" {

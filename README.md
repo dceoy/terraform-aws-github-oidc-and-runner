@@ -37,6 +37,8 @@ Installation
     $ terragrunt run-all apply --terragrunt-working-dir='envs/dev/' --terragrunt-non-interactive
     ```
 
+    If you connect to GitHub using OAuth, you need to re-run the above command after completing the authentication on the AWS Management Console.
+
 Cleanup
 -------
 

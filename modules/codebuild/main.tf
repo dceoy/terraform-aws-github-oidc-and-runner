@@ -1,12 +1,20 @@
 resource "aws_codebuild_project" "github" {
-  name         = local.codebuild_project_name
+  for_each     = local.codebuild_project_names
+  name         = each.value
   description  = "CodeBuild project for GitHub Actions"
   service_role = aws_iam_role.github.arn
   artifacts {
     type = "NO_ARTIFACTS"
   }
   source {
-    type      = "NO_SOURCE"
+    type                = var.github_enterprise_slug != null ? "GITHUB_ENTERPRISE" : "GITHUB"
+    location            = "https://github.com/${each.key}.git"
+    git_clone_depth     = 1
+    insecure_ssl        = false
+    report_build_status = false
+    git_submodules_config {
+      fetch_submodules = true
+    }
     buildspec = <<-EOT
     ---
     version: 0.2
@@ -25,33 +33,46 @@ resource "aws_codebuild_project" "github" {
   }
   logs_config {
     cloudwatch_logs {
-      group_name = aws_cloudwatch_log_group.github.name
-      status     = "ENABLED"
+      group_name  = aws_cloudwatch_log_group.github.name
+      stream_name = each.key
+      status      = "ENABLED"
     }
   }
   build_timeout  = var.codebuild_build_timeout
   queued_timeout = var.codebuild_queued_timeout
   tags = {
-    Name       = local.codebuild_project_name
+    Name       = each.value
     SystemName = var.system_name
     EnvType    = var.env_type
   }
 }
 
+resource "aws_codebuild_webhook" "github" {
+  for_each     = aws_codebuild_project.github
+  project_name = each.value.name
+  build_type   = "BUILD"
+  filter_group {
+    filter {
+      type    = "EVENT"
+      pattern = "WORKFLOW_JOB_QUEUED"
+    }
+  }
+}
+
 resource "aws_cloudwatch_log_group" "github" {
-  name              = "/${var.system_name}/${var.env_type}/codebuild/${local.codebuild_project_name}"
+  name              = "/${var.system_name}/${var.env_type}/codebuild"
   retention_in_days = var.cloudwatch_logs_retention_in_days
   kms_key_id        = var.kms_key_arn
   tags = {
-    Name       = "/${var.system_name}/${var.env_type}/codebuild/${local.codebuild_project_name}"
+    Name       = "/${var.system_name}/${var.env_type}/codebuild"
     SystemName = var.system_name
     EnvType    = var.env_type
   }
 }
 
 resource "aws_iam_role" "github" {
-  name        = "${local.codebuild_project_name}-iam-role"
-  description = "GitHub OIDC provider IAM role"
+  name        = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-role"
+  description = "CodeBuild service role for GitHub Actions"
   path        = "/"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -66,11 +87,8 @@ resource "aws_iam_role" "github" {
       }
     ]
   })
-  managed_policy_arns = compact([
-    var.use_ecr ? "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly" : null
-  ])
   inline_policy {
-    name = "${local.codebuild_project_name}-iam-policy"
+    name = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-policy"
     policy = jsonencode({
       Version = "2012-10-17"
       Statement = concat(
@@ -106,7 +124,7 @@ resource "aws_iam_role" "github" {
     })
   }
   tags = {
-    Name       = "${local.codebuild_project_name}-iam-role"
+    Name       = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-role"
     SystemName = var.system_name
     EnvType    = var.env_type
   }

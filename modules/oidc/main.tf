@@ -1,5 +1,5 @@
 resource "aws_iam_openid_connect_provider" "github" {
-  count           = length(var.github_repositories_requiring_oidc) > 0 ? 1 : 0
+  count           = var.enable_github_oidc ? 1 : 0
   url             = var.github_enterprise_slug != null ? "https://token.actions.githubusercontent.com/${var.github_enterprise_slug}" : "https://token.actions.githubusercontent.com"
   thumbprint_list = [local.tls_certificate_sha1_fingerprint]
   client_id_list = setunion(

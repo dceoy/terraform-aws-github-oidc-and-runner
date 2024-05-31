@@ -10,6 +10,12 @@ variable "env_type" {
   default     = "dev"
 }
 
+variable "enable_github_oidc" {
+  description = "Enable GitHub OIDC"
+  type        = bool
+  default     = false
+}
+
 variable "github_repositories_requiring_oidc" {
   description = "GitHub repositories requiring OIDC"
   type        = list(string)
