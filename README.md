@@ -39,6 +39,13 @@ Installation
 
     If you connect to GitHub using OAuth, you need to re-run the above command after completing the authentication on the AWS Management Console.
 
+7.  Update `runs-on` in GitHub Actions workflow YAML files.
+    (Replace `<project-name>` with the CodeBuild project name.)
+
+    ```yaml
+    runs-on: codebuild-<project-name>-${{ github.run_id }}-${{ github.run_attempt }}
+    ```
+
 Cleanup
 -------
 
