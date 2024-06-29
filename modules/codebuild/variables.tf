@@ -93,3 +93,9 @@ variable "codebuild_queued_timeout" {
     error_message = "CodeBuild queued timeout must be between 5 and 480 minutes"
   }
 }
+
+variable "iam_role_force_detach_policies" {
+  description = "Whether to force detaching any policies the role has before destroying it"
+  type        = bool
+  default     = true
+}

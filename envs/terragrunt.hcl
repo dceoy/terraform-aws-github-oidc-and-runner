@@ -59,6 +59,7 @@ inputs = {
   enable_github_oidc                                = false
   github_repositories_requiring_oidc                = ["dceoy/*"]
   github_iam_oidc_provider_iam_policy_arns          = ["arn:aws:iam::aws:policy/PowerUserAccess"]
+  iam_role_force_detach_policies                    = true
   github_repositories_requiring_codebuild           = ["dceoy/terraform-aws-github-oidc-and-runner"]
   cloudwatch_logs_retention_in_days                 = 30
   codebuild_environment_type                        = "LINUX_CONTAINER"

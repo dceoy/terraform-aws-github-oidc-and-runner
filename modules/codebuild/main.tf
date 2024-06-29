@@ -71,9 +71,10 @@ resource "aws_cloudwatch_log_group" "github" {
 }
 
 resource "aws_iam_role" "github" {
-  name        = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-role"
-  description = "CodeBuild service role for GitHub Actions"
-  path        = "/"
+  name                  = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-role"
+  description           = "CodeBuild service role for GitHub Actions"
+  force_detach_policies = var.iam_role_force_detach_policies
+  path                  = "/"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

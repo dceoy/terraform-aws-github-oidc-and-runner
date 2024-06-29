@@ -14,10 +14,11 @@ resource "aws_iam_openid_connect_provider" "github" {
 }
 
 resource "aws_iam_role" "github" {
-  count       = length(aws_iam_openid_connect_provider.github) > 0 ? 1 : 0
-  name        = "${var.system_name}-${var.env_type}-github-iam-oidc-provider-iam-role"
-  description = "GitHub OIDC provider IAM role"
-  path        = "/"
+  count                 = length(aws_iam_openid_connect_provider.github) > 0 ? 1 : 0
+  name                  = "${var.system_name}-${var.env_type}-github-iam-oidc-provider-iam-role"
+  description           = "GitHub OIDC provider IAM role"
+  force_detach_policies = var.iam_role_force_detach_policies
+  path                  = "/"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
