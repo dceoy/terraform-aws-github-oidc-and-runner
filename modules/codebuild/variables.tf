@@ -44,8 +44,14 @@ variable "cloudwatch_logs_retention_in_days" {
   }
 }
 
+variable "iam_role_force_detach_policies" {
+  description = "Whether to force detaching any IAM policies the IAM role has before destroying it"
+  type        = bool
+  default     = true
+}
+
 variable "codebuild_environment_type" {
-  description = " CodeBuild environment type"
+  description = "CodeBuild environment type"
   type        = string
   default     = "LINUX_CONTAINER"
 }
@@ -92,10 +98,4 @@ variable "codebuild_queued_timeout" {
     condition     = var.codebuild_queued_timeout >= 5 && var.codebuild_queued_timeout <= 480
     error_message = "CodeBuild queued timeout must be between 5 and 480 minutes"
   }
-}
-
-variable "iam_role_force_detach_policies" {
-  description = "Whether to force detaching any policies the role has before destroying it"
-  type        = bool
-  default     = true
 }

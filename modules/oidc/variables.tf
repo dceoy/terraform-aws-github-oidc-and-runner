@@ -10,8 +10,14 @@ variable "env_type" {
   default     = "dev"
 }
 
+variable "iam_role_force_detach_policies" {
+  description = "Whether to force detaching any IAM policies the IAM role has before destroying it"
+  type        = bool
+  default     = true
+}
+
 variable "enable_github_oidc" {
-  description = "Enable GitHub OIDC"
+  description = "Whether to enable GitHub OIDC"
   type        = bool
   default     = false
 }
@@ -44,10 +50,4 @@ variable "github_enterprise_slug" {
   description = "GitHub Enterprise slug"
   type        = string
   default     = null
-}
-
-variable "iam_role_force_detach_policies" {
-  description = "Whether to force detaching any policies the role has before destroying it"
-  type        = bool
-  default     = true
 }
