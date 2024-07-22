@@ -3,7 +3,7 @@ terraform-aws-github-oidc-and-runner
 
 Terraform module for GitHub OIDC provider and Actions runner on AWS
 
-[![Lint and scan](https://github.com/dceoy/terraform-aws-github-oidc-and-runner/actions/workflows/lint-and-scan.yml/badge.svg)](https://github.com/dceoy/terraform-aws-github-oidc-and-runner/actions/workflows/lint-and-scan.yml)
+[![CI](https://github.com/dceoy/terraform-aws-github-oidc-and-runner/actions/workflows/ci.yml/badge.svg)](https://github.com/dceoy/terraform-aws-github-oidc-and-runner/actions/workflows/ci.yml)
 
 Installation
 ------------

@@ -17,15 +17,3 @@ updates:
     directory: /modules/oidc/
     schedule:
       interval: daily
-  - package-ecosystem: terraform
-    directory: /envs/dev/kms/
-    schedule:
-      interval: daily
-  - package-ecosystem: terraform
-    directory: /envs/dev/oidc/
-    schedule:
-      interval: daily
-  - package-ecosystem: terraform
-    directory: /envs/dev/codebuild/
-    schedule:
-      interval: daily
