@@ -1,7 +1,7 @@
 terraform-aws-github-oidc-and-runner
 ====================================
 
-Terraform module for GitHub OIDC provider and Actions runner on AWS
+Terraform modules for GitHub OIDC provider and Actions runner on AWS
 
 [![CI](https://github.com/dceoy/terraform-aws-github-oidc-and-runner/actions/workflows/ci.yml/badge.svg)](https://github.com/dceoy/terraform-aws-github-oidc-and-runner/actions/workflows/ci.yml)
 

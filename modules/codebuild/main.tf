@@ -19,9 +19,9 @@ resource "aws_codebuild_project" "github" {
     ---
     version: 0.2
     phases:
-      dummy:
+      build:
         commands:
-          - echo "This buildspec will be overridden by GitHub Actions"
+          - echo 'This buildspec will be overridden by GitHub Actions.'
     EOT
   }
   environment {
@@ -72,7 +72,7 @@ resource "aws_cloudwatch_log_group" "github" {
 
 resource "aws_iam_role" "github" {
   name                  = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-role"
-  description           = "CodeBuild service role for GitHub Actions"
+  description           = "CodeBuild service IAM role for GitHub Actions"
   force_detach_policies = var.iam_role_force_detach_policies
   path                  = "/"
   assume_role_policy = jsonencode({
