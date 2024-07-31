@@ -56,6 +56,7 @@ inputs = {
   env_type                                          = local.env_vars.locals.env_type
   create_kms_key                                    = false
   kms_key_deletion_window_in_days                   = 30
+  kms_key_rotation_period_in_days                   = 365
   enable_github_oidc                                = false
   github_repositories_requiring_oidc                = ["dceoy/*"]
   github_iam_oidc_provider_iam_policy_arns          = ["arn:aws:iam::aws:policy/PowerUserAccess"]
