@@ -58,3 +58,5 @@ jobs:
       - terraform-lint-and-scan
       - terraform-lock-files-upgrade
     uses: dceoy/gh-actions-for-devops/.github/workflows/dependabot-auto-merge.yml@main
+    with:
+      unconditional: true
