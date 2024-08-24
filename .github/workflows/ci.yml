@@ -51,12 +51,10 @@ jobs:
     with:
       terragrunt-working-directories: envs/dev
       terraform-version: latest
+      merge-pr: true
   dependabot-auto-merge:
     if: >
       github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
     needs:
       - terraform-lint-and-scan
-      - terraform-lock-files-upgrade
     uses: dceoy/gh-actions-for-devops/.github/workflows/dependabot-auto-merge.yml@main
-    with:
-      unconditional: true
