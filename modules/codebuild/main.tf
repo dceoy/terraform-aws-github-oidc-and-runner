@@ -88,45 +88,47 @@ resource "aws_iam_role" "github" {
       }
     ]
   })
-  inline_policy {
-    name = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-policy"
-    policy = jsonencode({
-      Version = "2012-10-17"
-      Statement = concat(
-        [
-          {
-            Sid      = "AllowDescribeLogGroups"
-            Effect   = "Allow"
-            Action   = ["logs:DescribeLogGroups"]
-            Resource = ["arn:aws:logs:${local.region}:${local.account_id}:log-group:*"]
-          },
-          {
-            Sid    = "AllowLogStreamAccess"
-            Effect = "Allow"
-            Action = [
-              "logs:CreateLogStream",
-              "logs:PutLogEvents",
-              "logs:DescribeLogStreams"
-            ]
-            Resource = ["${aws_cloudwatch_log_group.github.arn}:*"]
-          }
-        ],
-        (
-          var.kms_key_arn != null ? [
-            {
-              Sid      = "AllowKMSDecrypt"
-              Effect   = "Allow"
-              Action   = ["kms:GenerateDataKey"]
-              Resource = [var.kms_key_arn]
-            }
-          ] : []
-        )
-      )
-    })
-  }
   tags = {
     Name       = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-role"
     SystemName = var.system_name
     EnvType    = var.env_type
   }
+}
+
+resource "aws_iam_role_policy" "github" {
+  name = "${var.system_name}-${var.env_type}-github-actions-codebuild-iam-policy"
+  role = aws_iam_role.github.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = concat(
+      [
+        {
+          Sid      = "AllowDescribeLogGroups"
+          Effect   = "Allow"
+          Action   = ["logs:DescribeLogGroups"]
+          Resource = ["arn:aws:logs:${local.region}:${local.account_id}:log-group:*"]
+        },
+        {
+          Sid    = "AllowLogStreamAccess"
+          Effect = "Allow"
+          Action = [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents",
+            "logs:DescribeLogStreams"
+          ]
+          Resource = ["${aws_cloudwatch_log_group.github.arn}:*"]
+        }
+      ],
+      (
+        var.kms_key_arn != null ? [
+          {
+            Sid      = "AllowKMSDecrypt"
+            Effect   = "Allow"
+            Action   = ["kms:GenerateDataKey"]
+            Resource = [var.kms_key_arn]
+          }
+        ] : []
+      )
+    )
+  })
 }
