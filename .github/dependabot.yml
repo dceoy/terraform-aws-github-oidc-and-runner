@@ -7,12 +7,9 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
   - package-ecosystem: terraform
-    directory: /modules/kms/
-    schedule:
-      interval: daily
-    open-pull-requests-limit: 10
-  - package-ecosystem: terraform
-    directory: /modules/oidc/
+    directories:
+      - /modules/kms/
+      - /modules/oidc/
     schedule:
       interval: daily
     open-pull-requests-limit: 10
