@@ -43,8 +43,25 @@ Installation
     (Replace `<project-name>` with the CodeBuild project name.)
 
     ```yaml
-    runs-on: codebuild-<project-name>-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on:
+      - codebuild-<project-name>-${{ github.run_id }}-${{ github.run_attempt }}
     ```
+
+    To override the project defaults for a specific job, add labels such as
+    `image:<environment-type>-<image-identifier>`,
+    `instance-size:<instance-size>`, `fleet:<fleet-name>`, and
+    `buildspec-override:true`.
+
+    ```yaml
+    runs-on:
+      - codebuild-<project-name>-${{ github.run_id }}-${{ github.run_attempt }}
+      - image:arm-3.0
+      - instance-size:small
+      - buildspec-override:true
+    ```
+
+    CodeBuild ignores the project buildspec for GitHub Actions jobs unless
+    `buildspec-override:true` is set.
 
 Cleanup
 -------

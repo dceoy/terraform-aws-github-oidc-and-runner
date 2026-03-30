@@ -75,6 +75,6 @@ inputs = {
   codebuild_environment_image_pull_credentials_type = "CODEBUILD"
   codebuild_environment_privileged_mode             = false
   codebuild_build_timeout                           = 5
-  codebuild_queue_timeout                           = 5
+  codebuild_queued_timeout                          = 5
   # github_enterprise_slug                            = null
 }
