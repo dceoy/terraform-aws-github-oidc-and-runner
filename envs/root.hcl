@@ -68,7 +68,7 @@ inputs = {
   }
   iam_role_force_detach_policies                    = true
   github_repositories_requiring_codebuild           = ["dceoy/terraform-aws-github-oidc-and-runner"]
-  cloudwatch_logs_retention_in_days                 = 30
+  cloudwatch_logs_retention_in_days                 = 365
   codebuild_environment_type                        = "LINUX_CONTAINER"
   codebuild_environment_compute_type                = "BUILD_GENERAL1_SMALL"
   codebuild_environment_image                       = "aws/codebuild/standard:7.0"
