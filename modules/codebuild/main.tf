@@ -2,7 +2,8 @@ resource "aws_codebuild_project" "github" {
   for_each     = local.codebuild_project_names
   name         = each.value
   description  = "CodeBuild project for GitHub Actions"
-  service_role = aws_iam_role.github.arn
+  service_role   = aws_iam_role.github.arn
+  encryption_key = var.kms_key_arn
   artifacts {
     type = "NO_ARTIFACTS"
   }
