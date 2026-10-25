@@ -39,9 +39,8 @@ jobs:
       pull-requests: write
     uses: dceoy/gha-for-devops/.github/workflows/terraform-lock-files-upgrade.yml@main
     with:
-      terragrunt-working-directories: envs/dev
+      terraform-working-directories: modules
       terraform-version: latest
-      terragrunt-version: '1.2.1'
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   dependabot-auto-merge:
