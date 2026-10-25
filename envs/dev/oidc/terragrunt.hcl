@@ -3,6 +3,6 @@ include "root" {
 }
 
 terraform {
-  source = "${get_repo_root()}/modules/oidc"
+  source                   = "${get_repo_root()}/modules/oidc"
   copy_terraform_lock_file = false
 }
