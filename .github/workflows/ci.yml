@@ -59,7 +59,7 @@ jobs:
   dependabot-auto-merge:
     if: >
       github.event_name == 'pull_request'
-      && github.actor == 'dependabot[bot]'
+      && github.event.pull_request.user.login == 'dependabot[bot]'
       && (! startswith(github.head_ref, 'dependabot/terraform/'))
     needs:
       - terraform-lint-and-scan
